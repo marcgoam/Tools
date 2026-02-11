@@ -1,5 +1,4 @@
-function Invoke-Marchound
-{
+function Invoke-Marchound{
     [CmdletBinding(PositionalBinding = $false)]
     param(
         [Alias("c")]
