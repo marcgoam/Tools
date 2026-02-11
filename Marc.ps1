@@ -1,4 +1,4 @@
-function Invoke-DomainPasswordSpray{
+function Invoke-Marc{
     param(
      [Parameter(Position = 0, Mandatory = $false)]
      [string]
