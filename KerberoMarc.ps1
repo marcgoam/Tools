@@ -1,4 +1,4 @@
-function Get-DomainSearcher {
+function Get-MarcDomainSearcher {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [OutputType('System.DirectoryServices.DirectorySearcher')]
     [CmdletBinding()]
@@ -177,7 +177,7 @@ function Get-DomainSearcher {
 }
 
 
-function Convert-LDAPProperty {
+function Convert-MarcLDAPProperty {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [OutputType('System.Management.Automation.PSCustomObject')]
     [CmdletBinding()]
@@ -270,7 +270,7 @@ function Convert-LDAPProperty {
 }
 
 
-function Get-Domain {
+function Get-DomainMarc {
     [OutputType([System.DirectoryServices.ActiveDirectory.Domain])]
     [CmdletBinding()]
     Param(
@@ -328,7 +328,7 @@ function Get-Domain {
 
 
 
-function Get-DomainSPNTicket {
+function Get-DomainSPNTicketMarc {
     [OutputType('PowerView.SPNTicket')]
     [CmdletBinding(DefaultParameterSetName = 'RawSPN')]
     Param (
@@ -463,7 +463,7 @@ function Get-DomainSPNTicket {
     }
 }
 
-function Get-DomainUser {
+function Get-DomainUserMarc {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '')]
     [OutputType('PowerView.User')]
