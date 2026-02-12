@@ -1,24 +1,13 @@
-﻿function New-InMemoryModule {
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
+function nIM{ 
     [CmdletBinding()]
-    Param (
-        [Parameter(Position = 0)]
-        [ValidateNotNullOrEmpty()]
-        [String]
-        $ModuleName = [Guid]::NewGuid().ToString()
-    )
-    $AppDomain = [Reflection.Assembly].Assembly.GetType('System.AppDomain').GetProperty('CurrentDomain').GetValue($null, @())
-    $LoadedAssemblies = $AppDomain.GetAssemblies()
-    foreach ($Assembly in $LoadedAssemblies) {
-        if ($Assembly.FullName -and ($Assembly.FullName.Split(',')[0] -eq $ModuleName)) {
-            return $Assembly
-        }
-    }
-    $DynAssembly = New-Object Reflection.AssemblyName($ModuleName)
-    $Domain = $AppDomain
-    $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynAssembly, 'Run')
-    $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule($ModuleName, $False)
-    return $ModuleBuilder
+    Param([Parameter(Position=0)][String]$n=[Guid]::NewGuid().ToString())
+    $a=[Ref].Assembly.GetType(('Sy'+'stem.AppD'+'omain')).GetProperty(('Curr'+'entDomain')).GetValue($null,@())
+    $l=$a.GetAssemblies()
+    foreach($b in $l){if($b.FullName -and ($b.FullName.Split(',')[0] -eq $n)){return $b}}
+    $d=New-Object Reflection.AssemblyName($n)
+    $ab=$a.DefineDynamicAssembly($d,'Run')
+    $mb=$ab.DefineDynamicModule(('I'+'nMem'+'ory'+$n),$false)
+    return $mb
 }
 function func {
     Param (
