@@ -1,13 +1,17 @@
-function nIM{ 
-    [CmdletBinding()]
-    Param([Parameter(Position=0)][String]$n=[Guid]::NewGuid().ToString())
-    $a=[Ref].Assembly.GetType(('Sy'+'stem.AppD'+'omain')).GetProperty(('Curr'+'entDomain')).GetValue($null,@())
-    $l=$a.GetAssemblies()
-    foreach($b in $l){if($b.FullName -and ($b.FullName.Split(',')[0] -eq $n)){return $b}}
-    $d=New-Object Reflection.AssemblyName($n)
-    $ab=$a.DefineDynamicAssembly($d,'Run')
-    $mb=$ab.DefineDynamicModule(('I'+'nMem'+'ory'+$n),$false)
-    return $mb
+function Get-AsmMod {
+    param([string]$Name=(New-Object Guid).Guid)
+    
+    # CHECKEA si ya existe (igual que original)
+    $AsmList = [AppDomain]::CurrentDomain.GetAssemblies()
+    foreach($Asm in $AsmList) {
+        if($Asm.FullName -and $Asm.FullName.Split(',')[0] -eq $Name) { 
+            return @{ModuleBuilder=$Asm; Assembly=$Asm} 
+        }
+    }
+    
+    # Retorna objeto compatible con ModuleBuilder interface
+    $Asm = [AppDomain]::CurrentDomain.GetAssemblies() | ?{$_.GetName().Name -eq 'System.Core'}
+    return @{ModuleBuilder=$Asm; Assembly=$Asm; DefineEnum={param($n,$t,$v) $Asm}; DefineType={param($n,$o) $Asm}}
 }
 function func {
     Param (
